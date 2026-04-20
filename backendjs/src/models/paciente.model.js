@@ -14,7 +14,8 @@ const criar = (dados) => {
 
     pacientes.push( novoPaciente);
     
-    console.log(`\n\n\n [testando rota] NOVO PACIENTE CADASTRADO!: \nNOME: ${ novoPaciente.nome };\nCPF: ${novoPaciente.cpf}\n\n\n`);
+    console.log(`\n\n\n[testando rota] NOVO PACIENTE CADASTRADO!: \nNOME: ${ novoPaciente.nome };\nCPF: ${novoPaciente.cpf}\n\n\n`);
+    console.log('-------------------------------------------------------------------------------');
     return novoPaciente;
 };
 
