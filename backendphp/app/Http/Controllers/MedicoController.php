@@ -6,24 +6,43 @@ use App\Models\Medico;
 use Illuminate\Http\Request;
 
 class MedicoController extends Controller{
-    /**
-     * Display a listing of the resource.
-     */
+
+    // GET
     public function index(){
-        return response()->json([ 'message' => 'ok' ]);
+
+        $medicos = Medico::all();  // aqui o laravel já roda o comando SQL "SELECT * FROM medicos"
+
+        if(  $medicos->isEmpty() ){
+            return response() -> json( [
+                'message'=> 'Nenhum médico cadastrado. ' ,
+            ], status: 200 );
+
+        }else{
+            return response() -> json(  $medicos );
+        }
+    }
+
+    //POST
+    public function store( Request $request ) {
+
+        $request->validate( rules:[
+            'nome' => 'required',
+            'crm' => 'required',
+            'uf_crm' =>'required | size: 2',
+        ]);
+
+      $medico = Medico::create($request->all());
+
+        return response()->json([
+            'message' => 'Médico criado com sucesso',
+            'data' => $medico
+        ], status : 201);
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(){
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request){
         //
     }
 

@@ -8,8 +8,9 @@ Route::get('/', function () {
     return view('welcome');
 });  */
 
-Route::prefix('v1')->group(function () {
-    Route::apiResource('medicos', MedicoController::class)->only([ 'index', 'store' ]);
+Route::prefix('v1')->group( function () {
+    Route::apiResource(
+         name: 'medicos',
+         controller: MedicoController::class
+    )->only([ 'index', 'store' ]);
 });
-
-
