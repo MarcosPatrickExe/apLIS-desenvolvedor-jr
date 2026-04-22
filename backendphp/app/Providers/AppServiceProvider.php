@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // reduz o tamanho do varchar para não ultrapassar o varchar do campo da tabela
+        // pois o laravel usa 4 bytes pra representar cada caractere do varchar!
         Schema::defaultStringLength(191);
     }
 }
