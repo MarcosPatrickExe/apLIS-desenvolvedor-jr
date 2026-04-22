@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Medico;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class MedicoController extends Controller{
 
@@ -25,17 +26,29 @@ class MedicoController extends Controller{
     //POST
     public function store( Request $request ) {
 
+        $out = new ConsoleOutput();
+        $out->writeln("\n testando request->CRM :  {$request->CRM} \n");
+
+        $data = $request->all();
+        $data['crm'] = $data['crm'] ?? $data['CRM'] ?? null;
+        $data['uf_crm'] = $data['uf_crm'] ?? $data['UFCRM'] ?? null;
+        $request->merge($data);
+
         $request->validate( rules:[
             'nome' => 'required',
             'crm' => 'required',
-            'uf_crm' =>'required | size: 2',
+            'uf_crm' =>'required|size:2',
         ]);
 
-      $medico = Medico::create($request->all());
+        $medico = Medico::create([
+              'nome' => $request->nome,
+              'crm' => $request->CRM,
+              'uf_crm' => $request->UFCRM,
+        ]);
 
         return response()->json([
-            'message' => 'Médico criado com sucesso',
-            'data' => $medico
+                'message' => 'Médico criado com sucesso',
+                'data' => $medico
         ], status : 201);
     }
 
