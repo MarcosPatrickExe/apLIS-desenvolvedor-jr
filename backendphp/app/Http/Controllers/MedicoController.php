@@ -52,6 +52,25 @@ class MedicoController extends Controller{
         ], status : 201);
     }
 
+
+     // DELETE
+    public function destroy( $id ){
+        $medico = Medico::find($id );
+
+        if(!$medico){
+            return response()->json([
+                'message'=> 'Médico não encontrado'
+            ], 404);
+        }
+
+        $medico->delete();
+
+        return response()->json([
+            'message' => 'Médico removido com sucesso'
+        ]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -80,10 +99,5 @@ class MedicoController extends Controller{
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Medico $medico){
-        //
-    }
+
 }
