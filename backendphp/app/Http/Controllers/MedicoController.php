@@ -25,7 +25,6 @@ class MedicoController extends Controller{
 
     //POST
     public function store( Request $request ) {
-
         $out = new ConsoleOutput();
         $out->writeln("\n testando request->CRM :  {$request->CRM} \n");
 
@@ -34,11 +33,19 @@ class MedicoController extends Controller{
         $data['uf_crm'] = $data['uf_crm'] ?? $data['UFCRM'] ?? null;
         $request->merge($data);
 
-        $request->validate( rules:[
+        $medico = Medico::where('crm', $request->CRM)->first();
+        if ($medico) {
+            return response()->json([
+                'message' => 'Já existe um médico com esse CRM'
+            ], 404);
+        }
+
+        $request->validate( [
             'nome' => 'required',
             'crm' => 'required',
             'uf_crm' =>'required|size:2',
-        ]);
+          ],
+        );
 
         $medico = Medico::create([
               'nome' => $request->nome,
@@ -55,7 +62,7 @@ class MedicoController extends Controller{
 
      // DELETE
     public function destroy( $id ){
-        $medico = Medico::find($id );
+        $medico = Medico::findOrFail($id );
 
         if(!$medico){
             return response()->json([
