@@ -62,9 +62,9 @@ class MedicoController extends Controller{
 
      // DELETE
     public function destroy( $id ){
-        $medico = Medico::findOrFail($id );
+        $medico = Medico::find($id );
 
-        if(!$medico){
+        if( !$medico ){
             return response()->json([
                 'message'=> 'Médico não encontrado'
             ], 404);
@@ -73,9 +73,41 @@ class MedicoController extends Controller{
         $medico->delete();
 
         return response()->json([
-            'message' => 'Médico removido com sucesso'
+            'message' => 'Médico removido com sucesso',
+            'data'=> $medico
         ]);
     }
+
+    //PUT
+    public function update( Request $request, $id ){
+
+        $medico = Medico::find($id );
+        if( !$medico ){
+            return response()->json([
+                'message'=> 'Médico não encontrado para realizar a alteração'
+            ], 404);
+        }
+
+        $request->merge([
+            'crm' => $request->CRM ?? $request->crm,
+            'uf_crm' => $request->UFCRM ?? $request->uf_crm,
+        ]);
+
+        $request->validate([
+            'nome' => 'required',
+            'crm' => 'required|unique:medicos,crm,' . $id,
+            'uf_crm' => 'required|size:2',
+        ]);
+
+        $medico->update( $request->only(['nome', 'crm', 'uf_crm']) );
+
+        return response()->json([
+            'message' => 'Médico atualizado com sucesso',
+            'data' => $medico
+        ]);
+    }
+
+
 
 
     /**
@@ -98,13 +130,4 @@ class MedicoController extends Controller{
     public function edit(Medico $medico){
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Medico $medico){
-        //
-    }
-
-
 }

@@ -12,5 +12,5 @@ Route::prefix('v1')->group( function () {
     Route::apiResource(
          name: 'medicos',
          controller: MedicoController::class
-    )->only([ 'index', 'store', 'destroy' ]);
+    )->only([ 'index', 'store', 'destroy', 'update' ]);
 });
