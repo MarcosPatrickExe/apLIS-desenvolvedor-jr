@@ -111,7 +111,7 @@ exports.atualizar = async (req, res) => {
 };
 
 
-
+ 
 exports.deletar = async (req, res) => {
     try {
         const { id } = req.params;
@@ -125,7 +125,7 @@ exports.deletar = async (req, res) => {
             });
         }
 
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
             message: "Paciente removido com sucesso!"
         });
