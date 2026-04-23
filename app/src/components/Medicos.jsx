@@ -12,7 +12,8 @@ function Medicos() {
 
   async function carregar() {
     const data = await getMedicos();
-    setMedicos(data);
+    setMedicos(data.data);
+    console.log(data.data);
   }
 
   async function salvar() {
@@ -37,13 +38,15 @@ function Medicos() {
 
                 <button onClick={salvar}>Cadastrar</button>
             </div>
-
+        </div>
+            
+        <div className="container">
             <ul className="lista">
                 {medicos.map(m => (
                     <li key={m.id} className="item">
                         <span>{m.nome}</span>
-                        <span>{m.CRM}</span>
-                        <span>{m.UFCRM}</span>
+                        <span>{m.crm}</span>
+                        <span>{m.ufcrm}</span>
                     </li>
                 ))}
             </ul>

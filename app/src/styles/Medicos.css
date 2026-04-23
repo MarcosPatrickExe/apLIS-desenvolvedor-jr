@@ -45,7 +45,7 @@ h2 {
 }
 
 /* Botão */
-button {
+.container button {
   padding: 10px 16px;
   background: #4f46e5;
   color: white;
