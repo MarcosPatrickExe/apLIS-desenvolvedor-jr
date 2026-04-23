@@ -56,35 +56,38 @@ h2 {
   max-width: 20%;
 }
 
+
+
 .form button:hover {
   background: #4338ca;
 }
 
-/* Lista */
 .lista {
   list-style: none;
   padding: 0;
 }
 
+.itemTitle,
 .item {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  transition: 0.2s;
+  display: grid;
+  grid-template-columns: 60px 1fr 150px 150px 150px;
+  gap: 40px;
+  padding: 10px;
+  align-items: center;
 }
 
+/* Header */
 .itemTitle {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  margin-bottom: 10px;
-  color: white;
-  background: #939393;
+  font-weight: bold;
+  background: #e5e7eb;
   border-radius: 8px;
-  transition: 0.2s;
+}
+
+/* Linhas */
+.item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 8px;
 }
 
 .item:hover {

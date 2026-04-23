@@ -33,6 +33,19 @@ function Pacientes() {
     }
   }
   
+  
+  async function atualizarPaciente() {
+    try {
+      console.log("ID: "+id);
+      await updatePaciente(id, { nome, cpf, carteirinha, dataNascimento }, limparCampos );
+      carregarPacientes();
+
+    } catch (errorSalvar) {
+      console.log(`Erro ao cadastrar: \n${errorSalvar}`);
+    }
+  }
+  
+  
   async function excluirPaciente() {
     
     try {
@@ -60,6 +73,7 @@ function Pacientes() {
           <input type="date" onChange={e => setDataNascimento(e.target.value)} value={dataNascimento}/>
 
           <button onClick={salvar}>Cadastrar</button>
+          <button onClick={atualizarPaciente}>Atualizar </button>
         </div>
 
       </div>
@@ -110,7 +124,7 @@ function Pacientes() {
             </select>
         </div>  
         
-        <button onClick={excluirPaciente}>Apagar paciente</button>
+        <button onClick={excluirPaciente}>Apagar</button>
       </div>
       
       
