@@ -6,8 +6,9 @@ export const getMedicos = async () => {
   return res.json();
 };
 
+
 // POST
-export const createMedico = async (data, limparCampos) => {
+export const createMedico = async (data, limparCamposMed) => {
   
   const res = await fetch(`${BASE_URL}/medicos`, {
     method: 'POST',
@@ -32,12 +33,52 @@ export const createMedico = async (data, limparCampos) => {
     alert(`Erro 422: ${msg.message || 'Dados inválios!'}`)
     
   }else if( res.status==201 ){
+    limparCamposMed();
     alert(`\n201: ${msg.message}\n`);
-    limparCampos()
   }
 
   return res;
 };
+
+
+
+
+// UPDATE
+export const updateMedico = async (id, data) =>{
+  
+  const res = await fetch(`${BASE_URL}/medicos/${id}`, {
+    method: 'PUT', 
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  const msg = await res.json();
+
+  if (res.status === 400) {
+    alert(`Erro 400: ${msg.message || 'Dados inválidos!'}`);
+
+  } else if (res.status === 404) {
+    alert(`Erro 404: ${msg.message}`);
+
+  } else if (res.status === 405) {
+    alert(`Erro 405: ${msg.message}`);
+
+  } else if (res.status === 409) {
+    alert(`Erro 409: ${msg.message}`);
+
+  } else if (res.status === 422) {
+    alert(`Erro 422: ${msg.message}`);
+
+  } else if (res.status == 200) {
+    alert(msg.message);
+  }
+
+  return res;
+}
+
 
 
 // DELETE
@@ -59,9 +100,4 @@ export const deleteMedico = async (id, carregarMedicos) =>{
   }
   
   return msg;
-}
-
-
-export const updatePacienteMedico = async(id) => {
-  
 }

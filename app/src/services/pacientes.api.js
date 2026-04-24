@@ -62,7 +62,7 @@ export const updatePaciente = async (id, data, limparCampos) =>{
   } else if (res.status === 409) {
     alert(`Erro 409: ${msg.message || 'Conflito de dados!'}`);
 
-  } else if (res.ok) {
+  } else if (res.status==200 ) {
     alert(msg.message);
     limparCampos();
   }

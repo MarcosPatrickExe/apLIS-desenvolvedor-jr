@@ -14,3 +14,9 @@ Route::prefix('v1')->group( function () {
          controller: MedicoController::class
     )->only([ 'index', 'store', 'destroy', 'update' ]);
 });
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Rota inválida ou parâmetro ID não informado'
+    ], 404);
+});

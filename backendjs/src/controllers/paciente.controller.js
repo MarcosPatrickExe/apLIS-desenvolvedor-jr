@@ -102,7 +102,7 @@ exports.atualizar = async (req, res) => {
             });
         }
 
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
             data: novosDados,
             message: "Paciente atualizado com sucesso!"

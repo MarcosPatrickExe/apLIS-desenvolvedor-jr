@@ -79,10 +79,11 @@ class MedicoController extends Controller{
     }
 
     //PUT
-    public function update( Request $request, $id ){
+    public function update( Request $request, Medico $medico ){
 
-        $medico = Medico::find($id );
-        if( !$medico ){
+        $medicoVar = Medico::find($medico->id );
+
+        if( !$medicoVar ){
             return response()->json([
                 'message'=> 'Médico não encontrado para realizar a alteração'
             ], 404);
@@ -95,15 +96,15 @@ class MedicoController extends Controller{
 
         $request->validate([
             'nome' => 'required',
-            'crm' => 'required|unique:medicos,crm,' . $id,
+            'crm' => 'required|unique:medicos,crm,' . $medicoVar->id,
             'uf_crm' => 'required|size:2',
         ]);
 
-        $medico->update( $request->only(['nome', 'crm', 'uf_crm']) );
+        $medicoAtualizado = $medicoVar->update( $request->only(['nome', 'crm', 'uf_crm']) );
 
         return response()->json([
             'message' => 'Médico atualizado com sucesso',
-            'data' => $medico
+            'data' => $medicoAtualizado
         ], 200);
     }
 

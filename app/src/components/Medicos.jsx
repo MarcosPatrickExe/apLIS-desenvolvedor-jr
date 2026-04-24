@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getMedicos, createMedico, deleteMedico, updatePacienteMedico } from '../services/medicos.api';
+import { getMedicos, createMedico, deleteMedico, updateMedico } from '../services/medicos.api';
 import '../styles/Medicos.css';
 
 function Medicos() {
@@ -17,20 +17,35 @@ function Medicos() {
     setMedicos(data);
   }
   
-  function limparCampos(){
+  function limparCamposMed(){
     setId(""); setNome(""); setCrm(""); setUf(""); 
   }
-  
-  
 
+   
   async function salvar() {
     try {
-      await createMedico({ nome, CRM, UFCRM }, limparCampos);
+      await createMedico({ nome, CRM, UFCRM }, limparCamposMed);
       carregarMedicos();
       
     } catch (errorSalvar) {
       alert(`Erro ao cadastrar: \n${errorSalvar}`);
     }
+  }
+  
+  
+  async function atualizarMedico() {
+      try {
+        console.log("ID: "+id);
+        const response = await updateMedico(id, { nome, CRM, UFCRM } );
+        
+        if( response.status==200 ){
+          limparCamposMed();
+          carregarMedicos();
+        }
+  
+      } catch (errorSalvar) {
+        console.log(`Erro ao cadastrar: \n${errorSalvar}`);
+      }
   }
   
   
@@ -43,13 +58,7 @@ function Medicos() {
     }
   }
   
-  
-  
-  
-  async function atualizarMedico(){
-    
-  }
-  
+
   
 
   return (
@@ -58,10 +67,10 @@ function Medicos() {
             <h2>Médicos</h2>
 
             <div className="form">
-                <input placeholder="id" onChange={e => setNome(e.target.value)} />
-                <input placeholder="Nome" onChange={e => setNome(e.target.value)} />
-                <input placeholder="CRM" onChange={e => setCrm(e.target.value)} />
-                <input placeholder="UF" onChange={e => setUf(e.target.value)} />
+                <input placeholder="id" onChange={e => setId(e.target.value)} value={id} />
+                <input placeholder="Nome" onChange={e => setNome(e.target.value)} value={nome} />
+                <input placeholder="CRM" onChange={e => setCrm(e.target.value)} value={CRM} />
+                <input placeholder="UF" onChange={e => setUf(e.target.value)} value={UFCRM} />
 
                 <button onClick={salvar}>Cadastrar</button>
                 <button onClick={atualizarMedico}>Atualizar </button>
@@ -89,6 +98,7 @@ function Medicos() {
                 <span>{m.uf_crm}</span>
               </li>
             ))}
+            
           </ul>
         </div>
         
