@@ -10,7 +10,7 @@ import './App.css'
 
 function App() {
   
-  const [page, setPage] = useState('pacientes');
+  const [page, setPage] = useState('medicos');
   const [isOpen, setOpen] = useState(false);
   
   return (

@@ -4,7 +4,7 @@ const BASE_URL = 'http://127.0.0.1:3000/api/v1';
 export const getPacientes = async () => {
   const res = await fetch(`${BASE_URL}/pacientes`, {method: 'GET'});
   const jsonVar = await res.json();
- // console.log(`\n\n${jsonVar.data}\n\n`);
+ //console.log(`\n\n${jsonVar.data}\n\n`);
   return jsonVar;
 };
 
@@ -73,7 +73,7 @@ export const updatePaciente = async (id, data, limparCampos) =>{
 
 // DELETE
 export const deletePaciente = async (id, carregarPacientes) =>{
-  const res = await fetch(`http://localhost:3000/api/v1/pacientes/${id}`, {
+  const res = await fetch(`${BASE_URL}/pacientes/${id}`, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',

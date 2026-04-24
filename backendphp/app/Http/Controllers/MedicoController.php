@@ -75,7 +75,7 @@ class MedicoController extends Controller{
         return response()->json([
             'message' => 'Médico removido com sucesso',
             'data'=> $medico
-        ]);
+        ], 200);
     }
 
     //PUT
@@ -104,7 +104,7 @@ class MedicoController extends Controller{
         return response()->json([
             'message' => 'Médico atualizado com sucesso',
             'data' => $medico
-        ]);
+        ], 200);
     }
 
 

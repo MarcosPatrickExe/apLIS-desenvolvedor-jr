@@ -70,7 +70,15 @@ exports.atualizar = async (req, res) => {
     try {
         const { id } = req.params;
         const { nome, dataNascimento, carteirinha, cpf } = req.body;
-
+      //  console.log(`ID: '${id}'`);
+        
+        if (id=="" || id==null) {
+            return res.status(400).json({
+                success: false,
+                message: 'Nenhum ID informado!'
+            });
+        }
+        
         if (!req.body || Object.keys(req.body).length === 0) {
             return res.status(400).json({
                 success: false,

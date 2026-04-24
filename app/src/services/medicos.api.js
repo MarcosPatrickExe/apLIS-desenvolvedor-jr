@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:3000/api/v1';
+const BASE_URL = 'http://127.0.0.1:8000/api/v1';
 
 // GET
 export const getMedicos = async () => {
@@ -6,7 +6,9 @@ export const getMedicos = async () => {
   return res.json();
 };
 
-export const createMedico = async (data) => {
+// POST
+export const createMedico = async (data, limparCampos) => {
+  
   const res = await fetch(`${BASE_URL}/medicos`, {
     method: 'POST',
     headers: {
@@ -15,6 +17,51 @@ export const createMedico = async (data) => {
     },
     body: JSON.stringify(data)
   });
+  
+  const msg = await res.json(); 
+  //console.log(`\n DATA INSERIDA: ${msg}\n\n`)
+  
+  if( res.status==400 ){
+    
+    alert(`Erro 400: ${msg.message || 'Dados inválios!'}`);
+    
+  }else if( res.status==404 ){
+    alert(`Erro 404: ${msg.message || 'Dados inválios!'}`)
+    
+  }else if( res.status==422 ){
+    alert(`Erro 422: ${msg.message || 'Dados inválios!'}`)
+    
+  }else if( res.status==201 ){
+    alert(`\n201: ${msg.message}\n`);
+    limparCampos()
+  }
 
-  return res.json();
+  return res;
 };
+
+
+// DELETE
+export const deleteMedico = async (id, carregarMedicos) =>{
+  const res = await fetch(`${BASE_URL}/medicos/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+
+  const msg = await res.json(); 
+  if( res.status==404 ){
+    alert(`Erro 404: ${msg.message || 'Dados inválios!'}`)
+    
+  }else if( res.status==200 ){
+    alert(`\n200: ${msg.message}\n`);
+    carregarMedicos();
+  }
+  
+  return msg;
+}
+
+
+export const updatePacienteMedico = async(id) => {
+  
+}
