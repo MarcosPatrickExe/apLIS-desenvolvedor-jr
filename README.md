@@ -1,98 +1,166 @@
-# Comunicação
+# 🏥 Sistema de Gestão de Médicos e Pacientes
 
-Toda a comunicação a respeito deste teste deve ser feita através do email thiago.barros@prestadores.aplis.inf.br. 
+Aplicação fullstack desenvolvida para gerenciamento de médicos e pacientes, utilizando múltiplos backends e um frontend integrado.
 
-# Entrega
+O sistema permite:
+- Cadastro, listagem, atualização e exclusão de médicos
+- Cadastro, listagem e exclusão de pacientes
+- Consumo de APIs REST via frontend em React
 
-- O prazo para entrega do teste é de 10 dias após seu envio ao candidato.
-- O teste pode ser entregue parcialmente, porém a porcentagem de aderencia ao escopo total será avaliada.
+---
 
-# Recomendações
+# 🌍 Deploy
 
-- Recomendamos uso de arquitetura MVC em ambos os backends.
-- Recomendamos que o pull request tem a menor quantidade possível de arquivos para cumprir o desafio.
+### A aplicação pode ser acessada em:
 
-## Teste Prático — Desenvolvedor Junior
+ https://marcospatrick.webtechevolution3.vps-kinghost.net
+  
+---
 
-- Para iniciar crie um fork deste repositório para seu perfil.
-- Para entregar crie uma solicitação pull request.
+# 🚀 Tecnologias Utilizadas
 
-O teste consiste no desenvolvimento de uma aplicação fullstack simples, composta por um frontend em React (SPA), dois backends independentes e um banco de dados MySQL compartilhado.
+- **Frontend:** React (Vite)
+- **Backend (Médicos):** PHP + Laravel
+- **Backend (Pacientes):** Node.js + Express
+- **VPS:** PM2 (mantém os backends em execução)
+- **Servidor Web:** Nginx (proxy reverso)
+- **Banco de Dados:** (adicione o seu: MySQL, PostgreSQL, etc)
 
-O backend em PHP será responsável pelo cadastro e listagem de médicos, enquanto o backend em Node.js será responsável pelo cadastro e listagem de pacientes. Cada backend deve expor endpoints REST para criação e consulta de seus respectivos dados, garantindo que as respostas estejam em formato JSON consistente.
+---
 
-O primeiro backend deverá ser desenvolvido em PHP e contemplar as seguintes rotas:
-- `GET /api/v1/medicos`: obtém todos os médicos retornando conforme exemplo abaixo: 
+# 📁 Estrutura do Projeto
+/frontend   
+/backend-laravel   
+/backend-node
 
-```json
-    [
-        {
-            "id": 1,
-            "nome": "João da Silva",
-            "CRM": "123456",
-            "UFCRM": "CE"
-        },
-        {
-            "id": 2,
-            "nome": "Francisco Pereira",
-            "CRM": "876543",
-            "UFCRM": "CE"
-        }
-    ]
+---
+
+# ⚙️ Como Executar o Projeto
+
+## 🔹 Backend Laravel (Médicos)
+
+```bash
+cd backendphp
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve
 ```
 
-- `POST /api/v1/medicos`: cria um novo médico enviando o body do exemplo abaixo e retornando a mensagem "Médico criado com sucesso".
-
-```json
-    {
-        "id": 1,
-        "nome": "João da Silva",
-        "CRM": "123456",
-        "UFCRM": "CE"
-    }
+## 🔹 Backend Node.js (Pacientes)
+```bash
+cd backendjs
+npm install
+cd src
+node mainAPI.js
 ```
 
-O segundo backend deverá ser desenvolvido em NodeJS (JavaScript) e contemplar as seguintes rotas:
-- `GET /api/v1/pacientes`: obtém todos os pacientes retornando conforme exemplo abaixo: 
-
-```json
-    [
-        {
-            "id": 1,
-            "nome": "João da Silva",
-            "dataNascimento": "2026-01-01",
-            "carteirinha": "123456",
-            "cpf": "12345678909"
-        },
-        {
-            "id": 2,
-            "nome": "Francisco Pereira",
-            "carteirinha": "876543",
-            "cpf": "12345678901"
-        }
-    ]
+## 🔹 Frontend React
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-- `POST /api/v1/pacientes`: cria um novo paciente enviando o body do exemplo abaixo e retornando a mensagem "Paciente criado com sucesso".
-
-```json
-    {
-        "id": 1,
-        "nome": "João da Silva",
-        "dataNascimento": "2026-01-01",
-        "carteirinha": "123456",
-        "cpf": "12345678909"
-    },
+### Build para produção:
+```bash
+npm run build
 ```
 
-O frontend deve consumir ambas as APIs, permitindo visualizar listas de médicos e pacientes separadamente, além de possibilitar o cadastro de novos registros. O candidato deverá organizar o projeto em três partes (frontend, backend Node e backend PHP), garantir a integração entre as camadas e manter o código legível e funcional.
+# 🌐 Rotas da API
+## 🟦 Médicos (Laravel)
+```bash
+GET    /api/v1/medicos
+POST   /api/v1/medicos
+PUT    /api/v1/medicos/{id}
+DELETE /api/v1/medicos/{id}
+```
 
-A tela deve mostrar um menu sidebar à esquerda com duas opções (Médicos e Pacientes), que quando clicado abre a tela de listagem e criação dos registros.
+## 🟩 Pacientes (Node.js)
+```bash
+GET    /api/v1/pacientes
+POST   /api/v1/pacientes
+PUT    /api/v1/pacientes/{id}
+DELETE /api/v1/pacientes/{id}
+```
 
-A avaliação considerará principalmente o funcionamento ponta a ponta da aplicação, a correta integração entre os serviços, a organização do código e, como diferencial, boas práticas, tratamento de erros e clareza na documentação. O tempo estimado para conclusão é de 6 a 10 horas.
+# 🔗 Integração (Nginx)
+
+O sistema utiliza Nginx como proxy reverso, permitindo que frontend e APIs sejam acessados a partir de um único domínio.
+
+---
+# ⚙️ Uso do PM2 (gerenciador de serviços)
+
+Durante o deploy da aplicação na VPS, utilizei o **PM2** como gerenciador de processos para garantir a execução contínua dos serviços backend.
+
+O PM2 permite manter aplicações Node.js em execução mesmo após quedas de conexão SSH ou reinicializações do servidor, além de facilitar o monitoramento e reinício automático em caso de falhas.
+
+## Principais benefícios utilizados no projeto
+
+- Execução em segundo plano dos serviços Node.js
+- Reinício automático em caso de crash da aplicação
+- Monitoramento de logs em tempo real
+- Facilidade para escalar e gerenciar múltiplos processos
+- Persistência dos processos após reboot da VPS
+
+## Comandos utilizados
+
+Iniciar aplicação:
+
+```bash
+pm2 start src/mainAPI.js --name node-backend
+```
+
+---
 
 
-# Desafio extra 
+# Mapeamento de rotas:
+```bash
+/ → Frontend (React) 
 
-- Crie as demais operações CRUD
-- Deixe o projeto pronto para multi linguagem, tanto no backend quanto no frontend.
+/api/v1/medicos → Backend Laravel
+
+/api/v1/pacientes → Backend Node.js
+```
+(Essa abordagem evita problemas de CORS e melhora a organização da aplicação.)
+
+
+# ⚠️ Tratamento de Erros
+
+A aplicação trata erros comuns como:
+
+400 (Bad Request): Dados inválidos
+
+409 (Conflict): Dados duplicados (ex: CRM já cadastrado)
+
+Mensagens de erro claras para o usuário
+
+# 🧪 Testes
+
+As APIs podem ser testadas utilizando:
+
+🔹 Insomnia
+
+🔹 Postman
+
+---
+
+# 🧠 Decisões Técnicas
+Separação de responsabilidades entre dois backends distintos
+
+Uso de proxy reverso para unificação de serviços
+
+Uso de rotas REST padronizadas (/api/v1/...)
+
+Organização modular do projeto
+
+# 📌 Observações
+O frontend consome as APIs utilizando caminhos relativos (/api/v1), facilitando o deploy
+
+O sistema foi estruturado visando clareza, organização e facilidade de manutenção
+
+## 👨‍💻 Autor
+
+Marcos Patrick
+
+
